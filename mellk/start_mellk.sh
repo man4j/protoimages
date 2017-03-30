@@ -31,10 +31,10 @@ docker service create --network monitoring --mode global --name logspout \
 gliderlabs/logspout tcp://logstash:7778?filter.name=*java*
 
 echo "Starting metricbeat..."
-docker service create --network monitoring --name=metricbeat --pid=host --mode global \
+docker service create --network monitoring --name=metricbeat --mode global \
 -e ELASTICSEARCH_URL=http://elasticsearch:9200 \
 --mount "type=bind,source=/var/run/docker.sock,target=/var/run/docker.sock" \
 --mount "type=bind,source=/proc,target=/hostfs/proc:ro" \
 --mount "type=bind,source=/sys/fs/cgroup,target=/hostfs/sys/fs/cgroup:ro" \
 --mount "type=bind,source=/,target=/hostfs:ro" \
-man4j/metricbeat:5.3.0_1 -system.hostfs=/hostfs
+man4j/metricbeat:5.3.0_3 -system.hostfs=/hostfs

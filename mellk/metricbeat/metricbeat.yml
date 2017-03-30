@@ -8,7 +8,7 @@ dashboards.enabled: true
 metricbeat.modules:
 - module: docker
   hosts: ["unix:///var/run/docker.sock"]
-  metricsets: ["container", "cpu", "diskio", "healthcheck", "image", "info", "memory", "network"]
+  metricsets: ["container", "cpu", "diskio", "healthcheck", "info", "memory", "network"]
   enabled: true
   period: 10s
 

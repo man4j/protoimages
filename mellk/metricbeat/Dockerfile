@@ -17,7 +17,8 @@ RUN curl -L -O https://artifacts.elastic.co/downloads/beats/metricbeat/metricbea
 
 WORKDIR /metricbeat
 
-ADD start.sh /metricbeat/start.sh
+COPY metricbeat.yml /metricbeat/
+COPY start.sh /metricbeat/
 RUN chmod +x /metricbeat/start.sh
 
 ENTRYPOINT /metricbeat/start.sh
