@@ -17,4 +17,4 @@ metricbeat.modules:
   enabled: true
   period: 10s
   processes: ['.*']
-  process.cgroups.enabled: false
+  process.cgroups.enabled: true

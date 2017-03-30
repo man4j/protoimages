@@ -37,4 +37,4 @@ docker service create --network monitoring --name=metricbeat --mode global \
 --mount "type=bind,source=/proc,target=/hostfs/proc:ro" \
 --mount "type=bind,source=/sys/fs/cgroup,target=/hostfs/sys/fs/cgroup:ro" \
 --mount "type=bind,source=/,target=/hostfs:ro" \
-man4j/metricbeat:5.3.0_3 -system.hostfs=/hostfs
+man4j/metricbeat:5.3.0_4 -system.hostfs=/hostfs
