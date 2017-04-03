@@ -1,4 +1,4 @@
-﻿output.elasticsearch:
+output.elasticsearch:
   hosts: ["http://elasticsearch:9200"]
   username: "elastic"
   password: "changeme"
