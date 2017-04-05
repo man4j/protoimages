@@ -11,7 +11,7 @@ docker service create --network dc1 --network monitoring --restart-delay 3m --re
 -e "HTTP_CHECK=OPTIONS * HTTP/1.1\r\nHost:\ www" \
 -e "MYSQL_ROOT_PASSWORD=PassWord123" \
 -e "MYSQL_MASTER_ROOT_PASSWORD=PassWord123" \
--e "MASTER_HOST=haproxy_group1" \
+-e "MASTER_HOST=haproxy_dc1" \
 -e "MASTER_PORT=3306" \
 man4j/percona_slave:5.7.17_3
 echo "Success"
@@ -26,7 +26,7 @@ docker service create --network dc2 --network monitoring --restart-delay 3m --re
 -e "HTTP_CHECK=OPTIONS * HTTP/1.1\r\nHost:\ www" \
 -e "MYSQL_ROOT_PASSWORD=PassWord123" \
 -e "MYSQL_MASTER_ROOT_PASSWORD=PassWord123" \
--e "MASTER_HOST=haproxy_group2" \
+-e "MASTER_HOST=haproxy_dc2" \
 -e "MASTER_PORT=3306" \
 man4j/percona_slave:5.7.17_3
 echo "Success"
@@ -41,7 +41,7 @@ docker service create --network dc3 --network monitoring --restart-delay 3m --re
 -e "HTTP_CHECK=OPTIONS * HTTP/1.1\r\nHost:\ www" \
 -e "MYSQL_ROOT_PASSWORD=PassWord123" \
 -e "MYSQL_MASTER_ROOT_PASSWORD=PassWord123" \
--e "MASTER_HOST=haproxy_group3" \
+-e "MASTER_HOST=haproxy_dc3" \
 -e "MASTER_PORT=3306" \
 man4j/percona_slave:5.7.17_3
 echo "Success"
