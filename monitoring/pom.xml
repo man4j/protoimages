@@ -100,7 +100,7 @@
         <version>0.4.13</version>
         <configuration>
           <serverId>docker-hub</serverId>
-          <imageName>man4j/monitoring_java_agent:v9</imageName>
+          <imageName>man4j/monitoring_java_agent:v11</imageName>
           <baseImage>openjdk:8</baseImage>
           <entryPoint>["java", "-jar", "/${project.build.finalName}.jar"]</entryPoint>
           <resources>
