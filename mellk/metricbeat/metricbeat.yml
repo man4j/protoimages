@@ -1,7 +1,7 @@
 output.elasticsearch:
-  hosts: ["http://elasticsearch:9200"]
+  hosts: ["http://67.205.138.97:9200"]
   username: "elastic"
-  password: "changeme"
+  password: "PassWord123"
 
 dashboards.enabled: true
 
@@ -16,5 +16,3 @@ metricbeat.modules:
   metricsets: ["core", "cpu", "diskio", "filesystem", "fsstat", "load", "memory", "network", "process", "socket"]
   enabled: true
   period: 10s
-  processes: ['.*']
-  process.cgroups.enabled: true
