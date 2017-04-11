@@ -17,5 +17,5 @@ sleep 180
 echo "Starting kibana..."
 docker run --restart=always -d --network monitoring -p 5601:5601 --name kibana \
 -e "ELASTICSEARCH_URL=http://elasticsearch:9200" \
--e "ELASTICSEARCH_PASSWORD=PassWord123" \
+-e "ELASTICSEARCH_PASSWORD=changeme" \
 docker.elastic.co/kibana/kibana:5.3.0

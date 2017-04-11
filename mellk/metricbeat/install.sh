@@ -11,5 +11,6 @@ mv /opt/metricbeat/metricbeat /bin/metricbeat && \
 chmod +x /bin/metricbeat && \
 mkdir -p /opt/metricbeat/config /opt/metricbeat/data && \
 rm metricbeat-${METRICBEAT_VERSION}-linux-x86_64.tar.gz && \
-cp ./metricbeat.yml /opt/metricbeat/
+cp ./metricbeat.yml /opt/metricbeat/ && \
+cp ./start.sh /opt/metricbeat/
 

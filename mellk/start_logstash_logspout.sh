@@ -10,4 +10,4 @@ echo "Starting logspout..."
 docker service create --network monitoring --mode global --name logspout \
 --mount "type=bind,source=/var/run/docker.sock,target=/var/run/docker.sock" \
 -e "INACTIVITY_TIMEOUT=1m" \
-gliderlabs/logspout tcp://10.0.4.11:7778?filter.name=*java*
+gliderlabs/logspout tcp://logstash:7778?filter.name=*java*
