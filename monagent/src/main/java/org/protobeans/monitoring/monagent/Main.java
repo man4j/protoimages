@@ -1,4 +1,4 @@
-package org.protobeans.monitoring.javaagent;
+package org.protobeans.monitoring.monagent;
 
 import org.protobeans.core.EntryPoint;
 import org.protobeans.monitoring.annotation.EnableDockerMonitoring;

@@ -3,7 +3,7 @@
 
   <groupId>org.protobeans.monitoring</groupId>
   <version>0.0.1-SNAPSHOT</version>
-  <artifactId>javaagent</artifactId>
+  <artifactId>monagent</artifactId>
   <packaging>jar</packaging>
   
   <properties>
@@ -35,7 +35,7 @@
             <configuration>
               <transformers>
                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                  <mainClass>org.protobeans.monitoring.javaagent.Main</mainClass>
+                  <mainClass>org.protobeans.monitoring.monagent.Main</mainClass>
                 </transformer>  
                 <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
                   <resource>META-INF/spring.handlers</resource>
@@ -100,7 +100,7 @@
         <version>0.4.13</version>
         <configuration>
           <serverId>docker-hub</serverId>
-          <imageName>man4j/monitoring_java_agent:v12</imageName>
+          <imageName>man4j/monagent:v1</imageName>
           <baseImage>openjdk:8</baseImage>
           <entryPoint>["java", "-jar", "/${project.build.finalName}.jar"]</entryPoint>
           <resources>
