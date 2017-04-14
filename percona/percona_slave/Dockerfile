@@ -3,7 +3,12 @@ FROM percona/percona-server:5.7.16
 USER root
 
 COPY entrypoint.sh /
-RUN chmod +x /entrypoint.sh 
+COPY init_datadir.sh /
+COPY wait_mysql.sh /
+
+RUN chmod +x /entrypoint.sh
+RUN chmod +x /init_datadir.sh
+RUN chmod +x /wait_mysql.sh
 
 COPY mysqlchk /etc/xinetd.d/
 

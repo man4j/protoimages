@@ -1,106 +1,14 @@
 #!/bin/bash
 set -e
 
-USER_ID=$(id -u)
-
 # if command starts with an option, prepend mysqld
 if [ "${1:0:1}" = '-' ]; then
-CMDARG="$@"
-fi
-# comment out log output in my.cnf
-
-if [ -n "$INIT_TOKUDB" ]; then
-export LD_PRELOAD=/lib64/libjemalloc.so.1
-fi
-# Get config
-DATADIR="$("mysqld" --verbose --help 2>/dev/null | awk '$1 == "datadir" { print $2; exit }')"
-
-if [ ! -d "$DATADIR/mysql" ]; then
-if [ -z "$MYSQL_ROOT_PASSWORD" -a -z "$MYSQL_ALLOW_EMPTY_PASSWORD" -a -z "$MYSQL_RANDOM_ROOT_PASSWORD" ]; then
-                        echo >&2 'error: database is uninitialized and password option is not specified '
-                        echo >&2 '  You need to specify one of MYSQL_ROOT_PASSWORD, MYSQL_ALLOW_EMPTY_PASSWORD and MYSQL_RANDOM_ROOT_PASSWORD'
-                        exit 1
-                fi
-mkdir -p "$DATADIR"
-
-echo "Running --initialize-insecure datadir: $DATADIR"
-sudo -u mysql mysqld --no-defaults --initialize-insecure --datadir="$DATADIR"
-echo 'Finished --initialize-insecure'
-
-sudo -u mysql mysqld --no-defaults --datadir="$DATADIR" --skip-networking &
-pid="$!"
-
-mysql=( mysql --protocol=socket -uroot )
-
-for i in {3000..0}; do
-if echo 'SELECT 1' | "${mysql[@]}" ; then
-break
-fi
-echo 'MySQL init process in progress...'
-sleep 1
-done
-if [ "$i" = 0 ]; then
-echo >&2 'MySQL init process failed.'
-exit 1
+  CMDARG="$@"
 fi
 
-# sed is for https://bugs.mysql.com/bug.php?id=20545
-mysql_tzinfo_to_sql /usr/share/zoneinfo | sed 's/Local time zone must be set--see zic manual page/FCTY/' | "${mysql[@]}" mysql
-# install TokuDB engine
-if [ -n "$INIT_TOKUDB" ]; then
-ps_tokudb_admin --force-mycnf --enable
-fi
+./init_datadir.sh
 
-if [ ! -z "$MYSQL_RANDOM_ROOT_PASSWORD" ]; then
-MYSQL_ROOT_PASSWORD="$(pwmake 128)"
-echo "GENERATED ROOT PASSWORD: $MYSQL_ROOT_PASSWORD"
-fi
-"${mysql[@]}" <<-EOSQL
--- What's done in this file shouldn't be replicated
---  or products like mysql-fabric won't work
-SET @@SESSION.SQL_LOG_BIN=0;
-CREATE USER 'root'@'%' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}' ;
-GRANT ALL ON *.* TO 'root'@'%' WITH GRANT OPTION ;
-ALTER USER 'root'@'localhost' IDENTIFIED BY '';
-DROP DATABASE IF EXISTS test ;
-FLUSH PRIVILEGES ;
-EOSQL
-
-if [ "$MYSQL_DATABASE" ]; then
-echo "CREATE DATABASE IF NOT EXISTS \`$MYSQL_DATABASE\` ;" | "${mysql[@]}"
-mysql+=( "$MYSQL_DATABASE" )
-fi
-
-if [ "$MYSQL_USER" -a "$MYSQL_PASSWORD" ]; then
-echo "CREATE USER '"$MYSQL_USER"'@'%' IDENTIFIED BY '"$MYSQL_PASSWORD"' ;" | "${mysql[@]}"
-
-if [ "$MYSQL_DATABASE" ]; then
-echo "GRANT ALL ON \`"$MYSQL_DATABASE"\`.* TO '"$MYSQL_USER"'@'%' ;" | "${mysql[@]}"
-fi
-
-echo 'FLUSH PRIVILEGES ;' | "${mysql[@]}"
-fi
-
-if [ ! -z "$MYSQL_ONETIME_PASSWORD" ]; then
-"${mysql[@]}" <<-EOSQL
-ALTER USER 'root'@'%' PASSWORD EXPIRE;
-EOSQL
-fi
-
-if ! kill -s TERM "$pid" || ! wait "$pid"; then
-echo >&2 'MySQL init process failed.'
-exit 1
-fi
-
-echo
-echo 'MySQL init process done. Ready for start up.'
-echo
-#mv /etc/my.cnf $DATADIR
-fi
-
-#My Patch#############################################
-
-#get server_id from ip address
+# get server_id from ip address
 ipaddr=$(hostname -i | awk ' { print $1 } ')
 server_id=$(echo $ipaddr | tr . '\n' | awk '{s = s*256 + $1} END {print s}')
 
@@ -140,29 +48,7 @@ $CMDARG &
 
 pid="$!"
 
-echo "Started with PID $pid, waiting for starting..."
-
-mysql=( mysql -u root -p${MYSQL_ROOT_PASSWORD} -h 127.0.0.1 -P ${MYSQL_PORT} )
-
-while true; do
-  if ! kill -0 $pid > /dev/null 2>&1; then
-    echo >&2 'MySQL start process failed.'
-    exit 1
-  fi
-
-  if echo 'SELECT 1' | "${mysql[@]}" ; then
-    break
-  fi
-  echo 'MySQL start process in progress...'
-  sleep 1
-done
-
-if [ "$i" = 0 ]; then
-  echo >&2 'MySQL start process failed.'
-  exit 1
-fi
-
-#mysql -u root -p${MYSQL_ROOT_PASSWORD} -h $MASTER_HOST -P $MASTER_PORT -e "SET GLOBAL read_only=1;"
+./wait_mysql.sh $pid
 
 echo "Checking Percona XtraDB Cluster Node status..."
 
@@ -197,8 +83,6 @@ mysqldump \
   --add-drop-database \
   --single-transaction \
   | mysql -u root -p${MYSQL_ROOT_PASSWORD} -h 127.0.0.1 -P ${MYSQL_PORT}
-
-#mysql -u root -p${MYSQL_ROOT_PASSWORD} -h $MASTER_HOST -P $MASTER_PORT -e "SET GLOBAL read_only=0;"
 
 echo "Slave initialized, connecting to master..."
 

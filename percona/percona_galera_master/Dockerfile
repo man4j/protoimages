@@ -15,4 +15,9 @@ COPY clustercheck /usr/bin/
 RUN chmod +x /usr/bin/clustercheck
 
 COPY entrypoint.sh /
+COPY init_datadir.sh /
+COPY wait_mysql.sh /
+
 RUN chmod +x /entrypoint.sh
+RUN chmod +x /init_datadir.sh
+RUN chmod +x /wait_mysql.sh
