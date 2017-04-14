@@ -15,8 +15,8 @@ COPY clustercheck /usr/bin/
 RUN chmod +x /usr/bin/clustercheck
 
 COPY entrypoint.sh /
-COPY init_datadir.sh /
-COPY wait_mysql.sh /
+COPY ../percona_common/init_datadir.sh /init_datadir.sh
+COPY ../percona_common/wait_mysql.sh /wait_mysql.sh
 
 RUN chmod +x /entrypoint.sh
 RUN chmod +x /init_datadir.sh

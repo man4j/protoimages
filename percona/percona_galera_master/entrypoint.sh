@@ -19,10 +19,10 @@ fi
 
 #Add some options to xtrabackup=======================================================
 if [ -z "$XTRABACKUP_USE_MEMORY" ]; then
-  $XTRABACKUP_USE_MEMORY=128M
+  XTRABACKUP_USE_MEMORY=128M
 fi
 
-echo -e "[sst]\ninno-apply-opts=\"--use-memory=${$XTRABACKUP_USE_MEMORY}\"" >> /etc/mysql/my.cnf
+echo -e "[sst]\ninno-apply-opts=\"--use-memory=${XTRABACKUP_USE_MEMORY}\"" >> /etc/mysql/my.cnf
 
 #Generate server_id===================================================================
 if [ -z "$NETMASK" ]; then
@@ -76,7 +76,7 @@ $CMDARG &
 
 pid="$!"
 
-./wait_mysql.sh $pid
+./wait_mysql.sh $pid $MYSQL_PORT
 
 #Start xinetd for HAProxy check status=================================
 /etc/init.d/xinetd start

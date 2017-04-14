@@ -16,7 +16,7 @@ if [ -z "$MYSQL_PORT" ]; then
   MYSQL_PORT=3306
 fi
 
-sudo -u mysql mysqld \
+mysqld \
 --port=$MYSQL_PORT \
 --user=mysql \
 --read_only=ON \
@@ -48,7 +48,7 @@ $CMDARG &
 
 pid="$!"
 
-./wait_mysql.sh $pid
+./wait_mysql.sh $pid $MYSQL_PORT
 
 echo "Checking Percona XtraDB Cluster Node status..."
 

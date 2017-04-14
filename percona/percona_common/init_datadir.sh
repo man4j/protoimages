@@ -1,4 +1,4 @@
-﻿#!/bin/bash
+#!/bin/bash
 set -e
 
 # Get config
@@ -14,15 +14,10 @@ if [ ! -e "$DATADIR/mysql" ]; then
   mkdir -p "$DATADIR"
 
   echo "Running --initialize-insecure on $DATADIR"
-  ls -lah $DATADIR
-
-  mysqld --no-defaults --initialize-insecure --datadir="$DATADIR"
-
-  chown -R mysql:mysql "$DATADIR"
-  chown mysql:mysql /var/log/mysqld.log
+  mysqld --user=mysql --initialize-insecure
   echo 'Finished --initialize-insecure'
 
-  mysqld --user=mysql --no-defaults --datadir="$DATADIR" --skip-networking &
+  mysqld --user=mysql --skip-networking &
   pid="$!"
 
   mysql=( mysql --protocol=socket -uroot )
@@ -61,7 +56,7 @@ if [ ! -e "$DATADIR/mysql" ]; then
     GRANT PROCESS ON *.* TO monitor@localhost IDENTIFIED BY 'monitor';
     DROP DATABASE IF EXISTS test ;
     FLUSH PRIVILEGES ;
-  EOSQL
+EOSQL
 
   if [ ! -z "$MYSQL_ROOT_PASSWORD" ]; then
     mysql+=( -p"${MYSQL_ROOT_PASSWORD}" )
@@ -83,7 +78,7 @@ if [ ! -e "$DATADIR/mysql" ]; then
   if [ ! -z "$MYSQL_ONETIME_PASSWORD" ]; then
     "${mysql[@]}" <<-EOSQL
     ALTER USER 'root'@'%' PASSWORD EXPIRE;
-    EOSQL
+EOSQL
   fi
     
   if ! kill -s TERM "$pid" || ! wait "$pid"; then
@@ -96,4 +91,3 @@ if [ ! -e "$DATADIR/mysql" ]; then
   echo
 fi
 
-chown -R mysql:mysql "$DATADIR"
