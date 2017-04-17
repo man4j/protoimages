@@ -22,7 +22,7 @@ if [ -z "$XTRABACKUP_USE_MEMORY" ]; then
   XTRABACKUP_USE_MEMORY=128M
 fi
 
-echo -e "[sst]\ninno-apply-opts=\"--use-memory=${XTRABACKUP_USE_MEMORY}\"" >> /etc/mysql/my.cnf
+echo -e "[xtrabackup]\nuse-memory=${XTRABACKUP_USE_MEMORY}" >> /etc/mysql/my.cnf
 
 #Generate server_id===================================================================
 if [ -z "$NETMASK" ]; then

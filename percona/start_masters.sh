@@ -2,7 +2,7 @@
 set -e
 
 dc_count=3
-image_version=5.7.16_2
+image_version=5.7.16_3
 
 echo "Starting galera_init"
 docker service create --network skynet --name galera_init --constraint "node.labels.dc == dc1" \
