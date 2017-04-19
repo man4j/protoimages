@@ -1,8 +1,11 @@
 #!/bin/bash
 set -e
 
-docker network create --driver overlay --attachable skynet
-docker network create --driver overlay --attachable monitoring
-docker network create --driver overlay --attachable dc1
-docker network create --driver overlay --attachable dc2
-docker network create --driver overlay --attachable dc3
+dc_count=3
+
+docker network create --driver overlay --attachable --subnet=10.0.0.0/16 skynet
+docker network create --driver overlay --attachable --subnet=11.0.0.0/16 monitoring
+
+for ((i=1;i<=$dc_count;i++)) do
+  docker network create --driver overlay --attachable --subnet=10.${i}.0.0/16 dc${i}
+done
