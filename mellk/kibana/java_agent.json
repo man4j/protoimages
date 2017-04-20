@@ -1,0 +1,16 @@
+﻿[
+  {
+    "_id": "491e1950-1e91-11e7-9b2b-8769d5b88a63",
+    "_type": "visualization",
+    "_source": {
+      "title": "G-Cloud Monitoring Java Agent Exceptions Table",
+      "visState": "{\"title\":\"G-Cloud Monitoring Java Agent Exceptions Table\",\"type\":\"table\",\"params\":{\"perPage\":10,\"showPartialRows\":false,\"showMeticsAtAllLevels\":false,\"sort\":{\"columnIndex\":null,\"direction\":null},\"showTotal\":false,\"totalFunc\":\"sum\"},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"top_hits\",\"schema\":\"metric\",\"params\":{\"field\":\"stack_trace\",\"aggregate\":\"concat\",\"size\":1000,\"sortField\":\"@timestamp\",\"sortOrder\":\"desc\",\"customLabel\":\"Exception\"}},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"@timestamp\",\"size\":1000,\"order\":\"desc\",\"orderBy\":\"_term\",\"customLabel\":\"Message\"}},{\"id\":\"3\",\"enabled\":true,\"type\":\"top_hits\",\"schema\":\"metric\",\"params\":{\"field\":\"message\",\"aggregate\":\"concat\",\"size\":1000,\"sortField\":\"@timestamp\",\"sortOrder\":\"desc\",\"customLabel\":\"Message\"}}],\"listeners\":{}}",
+      "uiStateJSON": "{\"vis\":{\"params\":{\"sort\":{\"columnIndex\":null,\"direction\":null}}}}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"logstash-*\",\"query\":{\"query_string\":{\"query\":\"monitoringType:COMMON\",\"analyze_wildcard\":true}},\"filter\":[]}"
+      }
+    }
+  }
+]
