@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Bean;
 public class Main {
     @Bean
     public LogProcessingChain logProcessingChain() {
-        return new LogProcessingChain().add(new MultilineProcessingStage(" ", "}"))
+        return new LogProcessingChain().add(new MultilineProcessingStage(new String[] {" ", "\t", "\r", "\n", "}"}, new String[] {":", "{"}))
                                        .add(new FillMetadataProcessingStage())
                                        .add(new JsonLineProcessingStage())
                                        .add(new LogOutputProcessingStage());

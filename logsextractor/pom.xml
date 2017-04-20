@@ -100,7 +100,7 @@
         <version>0.4.13</version>
         <configuration>
           <serverId>docker-hub</serverId>
-          <imageName>man4j/logsextractor:v1</imageName>
+          <imageName>man4j/logsextractor:v2</imageName>
           <baseImage>openjdk:8</baseImage>
           <entryPoint>["java", "-jar", "/${project.build.finalName}.jar"]</entryPoint>
           <resources>
