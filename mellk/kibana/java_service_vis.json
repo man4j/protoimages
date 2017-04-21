@@ -1,0 +1,44 @@
+[
+  {
+    "_id": "882d0870-1e02-11e7-bbe7-cbfc7001faf5",
+    "_type": "visualization",
+    "_source": {
+      "title": "G-Cloud Java Exceptions",
+      "visState": "{\"title\":\"G-Cloud Java Exceptions\",\"type\":\"histogram\",\"params\":{\"addLegend\":true,\"addTimeMarker\":false,\"addTooltip\":true,\"defaultYExtents\":false,\"legendPosition\":\"right\",\"mode\":\"stacked\",\"scale\":\"linear\",\"setYExtents\":false,\"times\":[]},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"enabled\":true,\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"@timestamp\",\"interval\":\"auto\",\"customInterval\":\"2h\",\"min_doc_count\":1,\"extended_bounds\":{}}}],\"listeners\":{}}",
+      "uiStateJSON": "{\"vis\":{\"colors\":{\"Count\":\"#E24D42\"},\"legendOpen\":false}}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"logstash-*\",\"query\":{\"query_string\":{\"query\":\"monitoringType:JAVA_SERVICE && _exists_:stack_trace\",\"analyze_wildcard\":true}},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "5babaed0-1e04-11e7-bbe7-cbfc7001faf5",
+    "_type": "visualization",
+    "_source": {
+      "title": "G-Cloud Java Exceptions Table",
+      "visState": "{\"title\":\"G-Cloud Java Exceptions Table\",\"type\":\"table\",\"params\":{\"perPage\":10,\"showPartialRows\":false,\"showMeticsAtAllLevels\":false,\"sort\":{\"columnIndex\":null,\"direction\":null},\"showTotal\":false,\"totalFunc\":\"sum\"},\"aggs\":[{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"@timestamp\",\"size\":1000,\"order\":\"desc\",\"orderBy\":\"_term\",\"customLabel\":\"Time\"}},{\"id\":\"3\",\"enabled\":true,\"type\":\"top_hits\",\"schema\":\"metric\",\"params\":{\"field\":\"logs_container_name\",\"aggregate\":\"concat\",\"size\":1000,\"sortField\":\"@timestamp\",\"sortOrder\":\"desc\",\"customLabel\":\"Host\"}},{\"id\":\"4\",\"enabled\":true,\"type\":\"top_hits\",\"schema\":\"metric\",\"params\":{\"field\":\"logs_node_name\",\"aggregate\":\"concat\",\"size\":1000,\"sortField\":\"@timestamp\",\"sortOrder\":\"desc\",\"customLabel\":\"Node\"}},{\"id\":\"1\",\"enabled\":true,\"type\":\"top_hits\",\"schema\":\"metric\",\"params\":{\"field\":\"stack_trace\",\"aggregate\":\"concat\",\"size\":1000,\"sortField\":\"@timestamp\",\"sortOrder\":\"desc\",\"customLabel\":\"Exception\"}}],\"listeners\":{}}",
+      "uiStateJSON": "{\"vis\":{\"params\":{\"sort\":{\"columnIndex\":null,\"direction\":null}}}}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"logstash-*\",\"query\":{\"query_string\":{\"query\":\"monitoringType:JAVA_SERVICE && _exists_:stack_trace\",\"analyze_wildcard\":true}},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "50cbd550-1542-11e7-8ca9-5d19d851deeb",
+    "_type": "visualization",
+    "_source": {
+      "title": "G-Cloud Java Random Int Distribution",
+      "visState": "{\"title\":\"G-Cloud Java Random Int Distribution\",\"type\":\"timelion\",\"params\":{\"expression\":\".es(q=monitoringType:JAVA_SERVICE,metric=max:randomInt, split=logs_container_name.keyword:10).points()\",\"interval\":\"auto\"},\"aggs\":[],\"listeners\":{}}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"query\":{\"query_string\":{\"query\":\"*\",\"analyze_wildcard\":true}},\"filter\":[]}"
+      }
+    }
+  }
+]
