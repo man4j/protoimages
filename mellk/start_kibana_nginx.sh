@@ -1,0 +1,1 @@
+docker run --restart=always -d -p 5601:5601 --network monitoring --name kibana-nginx man4j/kibana-nginx:1
