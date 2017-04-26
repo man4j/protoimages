@@ -14,12 +14,12 @@
     }
   },
   {
-    "_id": "819b4e10-1bbc-11e7-9b7c-7b7e629542d1",
+    "_id": "fd4e9aa0-1bbf-11e7-9b7c-7b7e629542d1",
     "_type": "visualization",
     "_source": {
-      "title": "G-Cloud Swarm Replicas Table",
-      "visState": "{\"title\":\"G-Cloud Swarm Replicas Table\",\"type\":\"table\",\"params\":{\"perPage\":15,\"showPartialRows\":false,\"showMeticsAtAllLevels\":false,\"sort\":{\"columnIndex\":null,\"direction\":null},\"showTotal\":true,\"totalFunc\":\"sum\"},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"max\",\"schema\":\"metric\",\"params\":{\"field\":\"swarm_service_replicas\",\"customLabel\":\"Desired Replicas\"}},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"swarm_service_name.keyword\",\"size\":1000,\"order\":\"desc\",\"orderBy\":\"_term\",\"customLabel\":\"Service Name\"}},{\"id\":\"3\",\"enabled\":true,\"type\":\"max\",\"schema\":\"metric\",\"params\":{\"field\":\"swarm_service_running_tasks\",\"customLabel\":\"Running Replicas\"}}],\"listeners\":{}}",
-      "uiStateJSON": "{\"vis\":{\"params\":{\"sort\":{\"columnIndex\":null,\"direction\":null}}}}",
+      "title": "G-Cloud Swarm DC-Service-Node-Task Circle",
+      "visState": "{\"title\":\"G-Cloud Swarm DC-Service-Node-Task Circle\",\"type\":\"pie\",\"params\":{\"addTooltip\":true,\"addLegend\":true,\"legendPosition\":\"right\",\"isDonut\":true},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"cardinality\",\"schema\":\"metric\",\"params\":{\"field\":\"swarm_task_id.keyword\",\"customLabel\":\"Task\"}},{\"id\":\"5\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"segment\",\"params\":{\"field\":\"swarm_node_labels_dc.keyword\",\"size\":1000,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"DC\"}},{\"id\":\"4\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"segment\",\"params\":{\"field\":\"swarm_node_name.keyword\",\"size\":1000,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"Node\"}},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"segment\",\"params\":{\"field\":\"swarm_service_name.keyword\",\"size\":1000,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"Service\"}}],\"listeners\":{}}",
+      "uiStateJSON": "{}",
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
@@ -28,12 +28,12 @@
     }
   },
   {
-    "_id": "fd4e9aa0-1bbf-11e7-9b7c-7b7e629542d1",
+    "_id": "819b4e10-1bbc-11e7-9b7c-7b7e629542d1",
     "_type": "visualization",
     "_source": {
-      "title": "G-Cloud Swarm Services Tasks Nodes Circle",
-      "visState": "{\"title\":\"G-Cloud Swarm Services Tasks Nodes Circle\",\"type\":\"pie\",\"params\":{\"addTooltip\":true,\"addLegend\":true,\"legendPosition\":\"right\",\"isDonut\":true},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"cardinality\",\"schema\":\"metric\",\"params\":{\"field\":\"swarm_task_id.keyword\",\"customLabel\":\"Task\"}},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"segment\",\"params\":{\"field\":\"swarm_service_name.keyword\",\"size\":1000,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"Service\"}},{\"id\":\"4\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"segment\",\"params\":{\"field\":\"swarm_node_name.keyword\",\"size\":1000,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"Node\"}},{\"id\":\"3\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"segment\",\"params\":{\"field\":\"swarm_task_id.keyword\",\"size\":1000,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"Task\"}}],\"listeners\":{}}",
-      "uiStateJSON": "{}",
+      "title": "G-Cloud Swarm Replicas Table",
+      "visState": "{\"title\":\"G-Cloud Swarm Replicas Table\",\"type\":\"table\",\"params\":{\"perPage\":15,\"showPartialRows\":false,\"showMeticsAtAllLevels\":false,\"sort\":{\"columnIndex\":null,\"direction\":null},\"showTotal\":true,\"totalFunc\":\"sum\"},\"aggs\":[{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"swarm_service_name.keyword\",\"size\":1000,\"order\":\"desc\",\"orderBy\":\"_term\",\"customLabel\":\"Service Name\"}},{\"id\":\"1\",\"enabled\":true,\"type\":\"max\",\"schema\":\"metric\",\"params\":{\"field\":\"swarm_service_replicas\",\"customLabel\":\"Desired Replicas\"}},{\"id\":\"3\",\"enabled\":true,\"type\":\"max\",\"schema\":\"metric\",\"params\":{\"field\":\"swarm_service_running_tasks\",\"customLabel\":\"Running Replicas\"}}],\"listeners\":{}}",
+      "uiStateJSON": "{\"vis\":{\"params\":{\"sort\":{\"columnIndex\":null,\"direction\":null}}}}",
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
