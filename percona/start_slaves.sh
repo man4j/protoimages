@@ -2,7 +2,7 @@
 set -e
 
 dc_count=3
-image_version=5.7.17_3
+image_version=5.7.16_3
 
 for ((i=1;i<=$dc_count;i++)) do 
   echo "Starting slaves in dc${i}..."

@@ -1,4 +1,4 @@
-docker run --restart=always -d -h dc1.2 --network monitoring --name=metricbeat --cap-add SYS_ADMIN \
+docker run --restart=always -d --network monitoring --name=metricbeat --cap-add SYS_ADMIN \
 -e ELASTICSEARCH_URL=http://elasticsearch:9200 \
 -v /var/run/docker.sock:/var/run/docker.sock \
 -v /proc:/hostfs/proc:ro \

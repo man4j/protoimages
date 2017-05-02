@@ -3,8 +3,8 @@ FROM percona/percona-server:5.7.16
 USER root
 
 COPY entrypoint.sh /
-COPY ../percona_common/init_datadir.sh /init_datadir.sh
-COPY ../percona_common/wait_mysql.sh /wait_mysql.sh
+COPY percona_common/init_datadir.sh /init_datadir.sh
+COPY percona_common/wait_mysql.sh /wait_mysql.sh
 
 RUN chmod +x /entrypoint.sh
 RUN chmod +x /init_datadir.sh
