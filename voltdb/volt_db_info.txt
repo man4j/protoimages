@@ -1,0 +1,5 @@
+https://downloads.voltdb.com/technologies/server/voltdb-ent-6.9.2.tar.gz
+
+$ sqlcmd
+1> load classes myproc.jar;
+2> show classes;

@@ -30,7 +30,7 @@ for ((i=1;i<=$dc_count;i++)) do
 -e "TCP_PORTS=3306" \
 -e "BALANCE=source" \
 -e "HEALTH_CHECK=check port 9200 inter 5000 rise 1 fall 2" \
--e "HTTP_CHECK=OPTIONS * HTTP/1.1\r\nHost:\ www" \
+-e "OPTION=httpchk OPTIONS * HTTP/1.1\r\nHost:\ www" \
 -e "CLUSTER_NAME=mycluster" \
 -e "MYSQL_ROOT_PASSWORD=PassWord123" \
 -e "CLUSTER_JOIN=galera_init${nodes}" \

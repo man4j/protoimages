@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<license>
+    <permit version="1" scheme="0">
+        <type>Enterprise Edition</type>
+        <issuer>
+            <company>VoltDB</company>
+            <email>support@voltdb.com</email>
+            <url>http://voltdb.com/</url>
+        </issuer>
+        <issuedate>2017-04-27</issuedate>
+        <licensee>VoltDB Trial User</licensee>
+        <expiration>2017-06-26</expiration>
+        <hostcount max="12"/>
+        <features trial="true">
+            <wanreplication>true</wanreplication>
+            <dractiveactive>true</dractiveactive>
+        </features>
+    </permit>
+    <signature>
+        302C0214278B9AF98D52CF01E1803ABFF9371738D31DC1
+        C502146E46474D479C2ABD969817670C3B5743A2AB539F
+    </signature>
+</license>
