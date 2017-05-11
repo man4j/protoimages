@@ -3,7 +3,7 @@
     "_id": "f6130450-25b1-11e7-8741-355abdbec645",
     "_type": "dashboard",
     "_source": {
-      "title": "G-Cloud Galera Logs",
+      "title": "G-Cloud Logs",
       "hits": 0,
       "description": "",
       "panelsJSON": "[{\"col\":1,\"id\":\"c1c51fd0-25b1-11e7-8741-355abdbec645\",\"panelIndex\":1,\"row\":5,\"size_x\":12,\"size_y\":7,\"type\":\"visualization\"},{\"col\":1,\"id\":\"1dd4d2b0-25b3-11e7-8741-355abdbec645\",\"panelIndex\":2,\"row\":1,\"size_x\":12,\"size_y\":4,\"type\":\"visualization\"}]",
