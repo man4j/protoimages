@@ -21,7 +21,3 @@ while true; do
   sleep 1
 done
 
-if [ "$i" = 0 ]; then
-  echo >&2 'MySQL start process failed.'
-  exit 1
-fi

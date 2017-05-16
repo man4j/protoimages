@@ -2,7 +2,8 @@
 
 set -e
 
-dc_count=3
+dc_count=$1
+constr=$2
 
 zoo_servers=server.1=zookeeper1:2888:3888
 zoo_connect=zookeeper1:2181
@@ -17,9 +18,11 @@ echo "zoo_connect:" ${zoo_connect}
 
 for ((i=1;i<=$dc_count;i++)) do
 
-echo "Starting zookeeper${i}..."
+echo "Starting zookeeper${i} with constraint: ${constr:-dc${i}}..."
 
-docker service create --network skynet --endpoint-mode dnsrr --name zookeeper${i} --constraint "node.labels.dc == dc${i}" \
+docker service create --network esf-net --endpoint-mode dnsrr --name zookeeper${i} --constraint "node.labels.dc == ${constr:-dc${i}}" \
+--mount "type=volume,source=zookeeper_data_volume${i},target=/data" \
+--mount "type=volume,source=zookeeper_datalog_volume${i},target=/datalog" \
 -e "ZOO_MY_ID=${i}" \
 -e "JMXPORT=9099" \
 -e "ZOO_SERVERS=${zoo_servers}" \
@@ -33,13 +36,14 @@ done
 
 for ((i=1;i<=$dc_count;i++)) do
 
-echo "Starting kafka${i}..."
+echo "Starting kafka${i} with constraint: ${constr:-dc${i}}..."
 
 if [[ $i == $dc_count ]]; then
-  createTopics=ESF.VALID:12:2
+  createTopics=ESF.VALID:12:2 #only on last node
 fi
 
-docker service create --network skynet --endpoint-mode dnsrr --name kafka${i} --constraint "node.labels.dc == dc${i}" \
+docker service create --network esf-net --endpoint-mode dnsrr --name kafka${i} --constraint "node.labels.dc == ${constr:-dc${i}}" \
+--mount "type=volume,source=kafka_volume${i},target=/kafka" \
 -e "KAFKA_ADVERTISED_HOST_NAME=kafka${i}" \
 -e "KAFKA_ADVERTISED_PORT=9092" \
 -e "KAFKA_LEADER_IMBALANCE_CHECK_INTERVAL_SECONDS=10" \

@@ -17,7 +17,9 @@ RUN chmod +x /usr/bin/clustercheck
 COPY entrypoint.sh /
 COPY percona_common/init_datadir.sh /init_datadir.sh
 COPY percona_common/wait_mysql.sh /wait_mysql.sh
+COPY percona_common/post_init.sh /post_init.sh
 
 RUN chmod +x /entrypoint.sh
 RUN chmod +x /init_datadir.sh
 RUN chmod +x /wait_mysql.sh
+RUN chmod +x /post_init.sh

@@ -48,7 +48,8 @@ RUN mkdir $DIRECTORY_SPEC
 COPY docker-entrypoint.sh .
 RUN chmod +x docker-entrypoint.sh
 
-COPY esf.jar /
+COPY post_init.sh $VOLTDB_DIST
+RUN chmod +x $VOLTDB_DIST/post_init.sh
 
 VOLUME /var/voltdb
 

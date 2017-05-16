@@ -80,12 +80,14 @@ EOSQL
     ALTER USER 'root'@'%' PASSWORD EXPIRE;
 EOSQL
   fi
-    
+
+  ./post_init.sh
+
   if ! kill -s TERM "$pid" || ! wait "$pid"; then
     echo >&2 'MySQL init process failed.'
     exit 1
   fi
-    
+
   echo
   echo 'MySQL init process done. Ready for start up.'
   echo

@@ -2,7 +2,7 @@
 set -e
 
 dc_count=3
-image_version=5.7.16_3
+image_version=5.7.16_2
 net_mask=10.0.0
 
 echo "Starting galera_init"
@@ -11,15 +11,13 @@ docker service create --network skynet --name galera_init --constraint "node.lab
 -e "MYSQL_ROOT_PASSWORD=PassWord123" \
 -e "GMCAST_SEGMENT=1" \
 -e "NETMASK=${net_mask}" \
-man4j/percona_galera_master:${image_version}
+man4j/esf_percona:${image_version}
 
 echo "Success, Waiting 60s..."
 sleep 60
 
 for ((i=1;i<=$dc_count;i++)) do
   echo "Starting galera in dc${i}..."
-
-  nodes="galera_init"
 
   for ((j=1;j<=$dc_count;j++)) do
     if [[ $j != $i ]]; then
@@ -35,11 +33,11 @@ for ((i=1;i<=$dc_count;i++)) do
 -e "OPTION=httpchk OPTIONS * HTTP/1.1\r\nHost:\ www" \
 -e "CLUSTER_NAME=mycluster" \
 -e "MYSQL_ROOT_PASSWORD=PassWord123" \
--e "CLUSTER_JOIN=${nodes}" \
+-e "CLUSTER_JOIN=galera_init${nodes}" \
 -e "XTRABACKUP_USE_MEMORY=128M" \
 -e "GMCAST_SEGMENT=${i}" \
 -e "NETMASK=${net_mask}" \
-man4j/percona_galera_master:${image_version} --wsrep_slave_threads=2
+man4j/esf_percona:${image_version} --wsrep_slave_threads=2
 
   nodes=""  
   echo "Success, Waiting 180s..."
