@@ -20,7 +20,7 @@ docker service create --network web-dc${i} --network percona-dc${i} --network es
 -e "NET_MASK=${net_mask}" \
 -e "JPDA_ADDRESS=8000" \
 -e "JPDA_TRANSPORT=dt_socket" \
-man4j/esf-web:v5 bin/catalina.sh jpda run
+man4j/esf-web:v7 bin/catalina.sh jpda run
 
 echo "Success"
 

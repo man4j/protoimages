@@ -15,8 +15,8 @@ docker service create --network esf-net --name percona_init --constraint "node.l
 -e "NETMASK=${net_mask}" \
 man4j/esf_percona:${image_version}
 
-echo "Success, Waiting 60s..."
-sleep 60
+echo "Success, Waiting 45s..."
+sleep 45
 
 for ((i=1;i<=$dc_count;i++)) do
   echo "Starting percona in dc${i} with constraint: ${constr:-dc${i}}..."
@@ -29,7 +29,7 @@ for ((i=1;i<=$dc_count;i++)) do
     fi
   done
 
-  docker service create --network esf-net --network percona-dc${i} --restart-delay 3m --restart-max-attempts 5 --name percona_dc${i} --constraint "node.labels.dc == ${constr:-dc${i}}" \
+  docker service create --network esf-net --network percona-dc${i} --restart-delay 1m --restart-max-attempts 5 --name percona_dc${i} --constraint "node.labels.dc == ${constr:-dc${i}}" \
 -e "SERVICE_PORTS=3306" \
 -e "TCP_PORTS=3306" \
 -e "BALANCE=source" \
@@ -43,9 +43,10 @@ for ((i=1;i<=$dc_count;i++)) do
 -e "NETMASK=${net_mask}" \
 man4j/esf_percona:${image_version} --wsrep_slave_threads=2
 
+  echo "Success, Waiting 45s..."
+  sleep 45
+
   nodes=""  
-  echo "Success, Waiting 180s..."
-  sleep 180
 done
 
 echo "Removing percona_init..."

@@ -34,7 +34,7 @@ docker service create -p 804${i}:8080 --network esf-net --name nginx-voltdb${i} 
 --constraint "node.labels.dc == ${constr:-dc${i}}" \
 man4j/nginx-protect:2
 
+echo "Success. Waiting 60s..."
 sleep 60
-echo "Success"
 
 done

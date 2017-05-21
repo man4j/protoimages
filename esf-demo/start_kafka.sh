@@ -28,8 +28,8 @@ docker service create --network esf-net --endpoint-mode dnsrr --name zookeeper${
 -e "ZOO_SERVERS=${zoo_servers}" \
 zookeeper:3.4.10
 
-sleep 60
-echo "Success"
+echo "Success. Waiting 30s..."
+sleep 30
 
 done
 
@@ -55,7 +55,7 @@ docker service create --network esf-net --endpoint-mode dnsrr --name kafka${i} -
 -e "KAFKA_PORT=9092" \
 wurstmeister/kafka:0.10.2.0
 
-sleep 60
-echo "Success"
+echo "Success. Waiting 30s..."
+sleep 30
 
 done
