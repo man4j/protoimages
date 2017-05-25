@@ -5,8 +5,12 @@ dc_count=$1
 single=$2
 
 ./create_networks.sh ${dc_count} ${single}
+
 ./start_haproxy.sh ${dc_count} ${single} &
+haproxy_pid="$!"
+
 ./start_web.sh ${dc_count} ${single} &
+web_pid="$!"
 
 ./start_percona.sh ${dc_count} ${single} &
 percona_pid="$!"
@@ -16,6 +20,12 @@ kafka_pid="$!"
 
 ./start_voltdb.sh ${dc_count} ${single} &
 voltdb_pid="$!"
+
+echo "Waiting haproxy..."
+wait "$haproxy_pid"
+
+echo "Waiting web..."
+wait "$web_pid"
 
 echo "Waiting percona..."
 wait "$percona_pid"
