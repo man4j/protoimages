@@ -1,4 +1,4 @@
-FROM man4j/percona_galera_master:5.7.16_5
+FROM imagenarium/percona-master:5.7.16.13
 
 COPY post_init.sh /
 COPY percona.sql /

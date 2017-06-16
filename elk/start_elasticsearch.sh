@@ -8,7 +8,7 @@ docker run --restart=always -d --network monitoring --name elasticsearch \
 -v esdata:/usr/share/elasticsearch/data \
 -e "http.host=0.0.0.0" \
 -e "transport.host=127.0.0.1" \
--e "ES_JAVA_OPTS=-Xms3G -Xmx3G" \
+-e "ES_JAVA_OPTS=-Xms1G -Xmx1G" \
 -e "bootstrap.memory_lock=true" \
 docker.elastic.co/elasticsearch/elasticsearch:5.3.0
 
