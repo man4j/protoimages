@@ -1,4 +1,4 @@
-FROM imagenarium/percona-master:5.7.16.14
+FROM imagenarium/percona-master:5.7.16.15
 
 COPY post_init.sh /
 COPY percona.sql /

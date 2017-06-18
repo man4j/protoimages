@@ -5,11 +5,11 @@ dc_count=$1
 timing=$2
 constr=$3
 image_name=man4j/percona-esf
-image_version=5.7.16.14.1
+image_version=5.7.16.15.1
 haproxy_version=1.6.7
 net_mask=100.0.0
 
-if [ -z "$2" ]; then
+if [-z "$2" ]; then
   timing=20
 fi
 
@@ -42,8 +42,18 @@ echo "| P | e | r | c | o | n | a |   | f | o | r |   | S | w | a | r | m |"
 echo ""
 echo ""
 
+echo "Creating a cross datacenter percona network: [percona-net]"
+set +e
+docker network create --driver overlay --attachable --subnet=${net_mask}.0/24 percona-net
+set -e
+
+echo "Creating a cross datacenter monitoring network: [monitoring]"
+set +e
+docker network create --driver overlay --attachable --subnet=77.77.77.0/24 monitoring
+set -e
+
 echo "Starting percona init service with constraint: ${constr:-dc1}..."
-docker service create --detach=false --network esf-net --name percona_init --constraint "node.labels.dc == ${constr:-dc1}" \
+docker service create --detach=false --network percona-net --name percona_init --constraint "node.labels.dc == ${constr:-dc1}" \
 -e "MYSQL_ROOT_PASSWORD=PassWord123" \
 -e "GMCAST_SEGMENT=1" \
 -e "SKIP_INIT=true" \
@@ -55,6 +65,11 @@ echo "Success, Waiting ${timing}s..."
 sleep ${timing}
 
 for ((i=1;i<=$dc_count;i++)) do
+  echo "Creating a local datacenter percona network: [percona-dc${i}]"
+  set +e
+  docker network create --driver overlay --attachable --subnet=100.${i}.0.0/24 percona-dc${i}
+  set -e
+
   echo "Starting percona service with constraint: ${constr:-dc${i}}..."
 
   nodes="percona_init"
@@ -65,7 +80,7 @@ for ((i=1;i<=$dc_count;i++)) do
     fi
   done
 
-  docker service create --detach=false --network esf-net --network percona-dc${i} --network monitoring --restart-delay 1m --restart-max-attempts 5 --name percona_master_dc${i} --constraint "node.labels.dc == ${constr:-dc${i}}" \
+  docker service create --detach=false --network percona-net --network percona-dc${i} --network monitoring --restart-delay 1m --restart-max-attempts 5 --name percona_master_dc${i} --constraint "node.labels.dc == ${constr:-dc${i}}" \
 --mount "type=volume,source=percona_master_data_volume${i},target=/var/lib/mysql" \
 --mount "type=volume,source=percona_master_log_volume${i},target=/var/log/mysql" \
 -e "SERVICE_PORTS=3306" \
@@ -75,6 +90,7 @@ for ((i=1;i<=$dc_count;i++)) do
 -e "OPTION=httpchk OPTIONS * HTTP/1.1\r\nHost:\ www" \
 -e "MYSQL_ROOT_PASSWORD=PassWord123" \
 -e "CLUSTER_JOIN=${nodes}" \
+-e "SKIP_INIT=true" \
 -e "XTRABACKUP_USE_MEMORY=128M" \
 -e "GMCAST_SEGMENT=${i}" \
 -e "NETMASK=${net_mask}" \
@@ -94,7 +110,7 @@ for ((i=1;i<=$dc_count;i++)) do
 -e "12INTROSPECT_STATUS_DELTA_LONG=wsrep_local_bf_aborts" \
 -e "13INTROSPECT_STATUS_DELTA_LONG=wsrep_local_cert_failures" \
 -e "14INTROSPECT_STATUS=wsrep_local_state_comment" \
-${image_name}:${image_version} --wsrep-sst-method=mysqldump --wsrep-sst-auth=root:PassWord123 --wsrep-slave-threads=2 --wsrep-sst-donor=percona_init,
+${image_name}:${image_version} --wsrep-sst-method=mysqldump --wsrep-sst-auth=root:PassWord123 --wsrep_slave_threads=2 --wsrep-sst-donor=percona_init,
 #set init node as donor for activate IST instead SST when the cluster starts
 
   echo "Success, Waiting ${timing}s..."
