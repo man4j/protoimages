@@ -1,1 +1,0 @@
-docker service create --network monitoring --name my_java_service --log-opt max-size=10m --log-opt max-file=10 man4j/my_java_service:v11

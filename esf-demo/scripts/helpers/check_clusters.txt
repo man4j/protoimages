@@ -1,0 +1,8 @@
+1. check voltb cluster
+sqlcmd --query="exec @SystemInformation overview;" | grep IPADDRESS
+
+2. check kafka cluster
+kafka-topics.sh --describe --zookeeper zookeeper1 | grep ESF
+
+3. check percona cluster
+mysql -e "show status like 'wsrep_cluster_size'"

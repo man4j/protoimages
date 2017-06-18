@@ -1,1 +1,0 @@
-see https://github.com/docker-library/elasticsearch/issues/98
