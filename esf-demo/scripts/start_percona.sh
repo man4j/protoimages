@@ -5,7 +5,7 @@ dc_count=$1
 timing=$2
 constr=$3
 image_name=man4j/percona-esf
-image_version=5.7.16.16.1
+image_version=5.7.16.17.1
 haproxy_version=1.6.7
 net_mask=100.0.0
 
