@@ -8,21 +8,6 @@ if [ -z "$1" ]; then
  echo "ERROR: Param dc_count not specified"
 fi
 
-echo ""
-echo ""
-echo " _____                                            _"
-echo "|_   _|                                          (_)"
-echo "  | | _ __ ___   __ _  __ _  ___ _ __   __ _ _ __ _ _   _ _ __ ___"
-echo "  | ||  _   _ \ / _  |/ _  |/ _ \  _ \ / _  |  __| | | | |  _   _ \ "
-echo " _| || | | | | | (_| | (_| |  __/ | | | (_| | |  | | |_| | | | | | |"
-echo " \___/_| |_| |_|\__ _|\__  |\___|_| |_|\__ _|_|  |_|\__ _|_| |_| |_|"
-echo "                       __/ |"
-echo "                      |___/"
-echo ""
-echo "| E | l | e | c | t | r | o | n | i | c |   | I | n | v | o | i | c | e   | S | y | s | t | e | m |"
-echo ""
-echo ""
-
 ./create_networks.sh ${dc_count} ${single} > /tmp/network.log 2>&1
 
 ./start_web.sh ${dc_count} ${single} > /tmp/web.log 2>&1 &

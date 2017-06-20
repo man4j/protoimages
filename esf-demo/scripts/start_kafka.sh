@@ -29,7 +29,7 @@ for ((i=1;i<=$dc_count;i++)) do
 
 echo "Starting zookeeper${i} with constraint: ${constr:-dc${i}}..."
 
-docker service create --detach=false --network kafka-net --endpoint-mode dnsrr --name zookeeper${i} --constraint "node.labels.dc == ${constr:-dc${i}}" \
+docker service create --detach=false --network kafka-net --endpoint-mode dnsrr --name zookeeper${i} --constraint "engine.labels.dc == ${constr:-dc${i}}" \
 --mount "type=volume,source=zookeeper_data_volume${i},target=/data" \
 --mount "type=volume,source=zookeeper_datalog_volume${i},target=/datalog" \
 -e "ZOO_MY_ID=${i}" \
@@ -52,7 +52,7 @@ if [[ $i == $dc_count ]]; then
   createTopics=ESF.VALID:12:2 #only on last node
 fi
 
-docker service create --detach=false --network kafka-net --endpoint-mode dnsrr --name kafka_dc${i} --constraint "node.labels.dc == ${constr:-dc${i}}" \
+docker service create --detach=false --network kafka-net --endpoint-mode dnsrr --name kafka_dc${i} --constraint "engine.labels.dc == ${constr:-dc${i}}" \
 --mount "type=volume,source=kafka_volume${i},target=/kafka" \
 -e "KAFKA_ADVERTISED_HOST_NAME=kafka_dc${i}" \
 -e "KAFKA_ADVERTISED_PORT=9092" \

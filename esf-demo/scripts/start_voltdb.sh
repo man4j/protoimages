@@ -24,7 +24,7 @@ echo "Hosts:" ${hosts}
 
 for ((i=1;i<=$dc_count;i++)) do
   echo "Starting voltdb with constraint: ${constr:-dc${i}}..."
-  docker service create --detach=false --network voltdb-net --endpoint-mode dnsrr --name voltdb_dc${i} --constraint "node.labels.dc == ${constr:-dc${i}}" \
+  docker service create --detach=false --network voltdb-net --endpoint-mode dnsrr --name voltdb_dc${i} --constraint "engine.labels.dc == ${constr:-dc${i}}" \
 -e "HOST_COUNT=${dc_count}" \
 -e "HOST_NUM=${i}" \
 -e "HOSTS=${hosts}" \
@@ -33,7 +33,7 @@ man4j/esf_voltdb:6.9.2_1
 
   echo "Starting nginx-voltdb with constraint: ${constr:-dc${i}}..."
 
-  docker service create --detach=false -p 804${i}:8080 --network voltdb-net --name nginx_voltdb_dc${i} --constraint "node.labels.dc == ${constr:-dc${i}}" \
+  docker service create --detach=false -p 804${i}:8080 --network voltdb-net --name nginx_voltdb_dc${i} --constraint "engine.labels.dc == ${constr:-dc${i}}" \
 -e "WEB_USER=man4j" \
 -e "WEB_PASSWORD=PassWord123" \
 -e "APP_URL=http://voltdb_dc${i}:8080" \

@@ -15,7 +15,7 @@ for ((i=1;i<=$dc_count;i++)) do
   docker network create --driver overlay --attachable --subnet=${i}.0.2.0/24 web-dc${i}
 
   echo "Starting esf-web with constraint: ${constr:-dc${i}}..."
-  docker service create --detach=false --network web-dc${i} --network percona-dc${i} --network voltdb-net --network kafka-net -p 800${i}:8000 --name esf_web_dc${i} --constraint "node.labels.dc == ${constr:-dc${i}}" \
+  docker service create --detach=false --network web-dc${i} --network percona-dc${i} --network voltdb-net --network kafka-net -p 800${i}:8000 --name esf_web_dc${i} --constraint "engine.labels.dc == ${constr:-dc${i}}" \
 -e "SERVICE_PORTS=8080" \
 -e "COOKIE=SRV insert indirect nocache" \
 -e "OPTION=httpchk OPTIONS /esf-web HTTP/1.1\r\nHost:\ www" \
@@ -29,7 +29,7 @@ for ((i=1;i<=$dc_count;i++)) do
 man4j/esf-web:v8 bin/catalina.sh jpda run
 
   echo "Starting haproxy with constraint: ${constr:-dc${i}}..."
-  docker service create --detach=false --network web-dc${i} -p 8${i}:80 --name web_proxy_dc${i} --mount target=/var/run/docker.sock,source=/var/run/docker.sock,type=bind --constraint "node.labels.dc == ${constr:-dc${i}}" \
+  docker service create --detach=false --network web-dc${i} -p 8${i}:80 --name web_proxy_dc${i} --mount target=/var/run/docker.sock,source=/var/run/docker.sock,type=bind --constraint "engine.labels.dc == ${constr:-dc${i}}" \
 -e "EXTRA_GLOBAL_SETTINGS=stats socket 0.0.0.0:14567" \
 dockercloud/haproxy:1.6.7
 
