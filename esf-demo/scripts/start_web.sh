@@ -9,7 +9,8 @@ if [ -z "$1" ]; then
  echo "ERROR: Param dc_count not specified"
 fi
 
-net_mask=100.0.0
+#ip address in voltdb-net
+net_mask=101.0.0
 
 for ((i=1;i<=$dc_count;i++)) do
   docker network create --driver overlay --attachable --subnet=${i}.0.2.0/24 web-dc${i}
@@ -26,7 +27,7 @@ for ((i=1;i<=$dc_count;i++)) do
 -e "NET_MASK=${net_mask}" \
 -e "JPDA_ADDRESS=8000" \
 -e "JPDA_TRANSPORT=dt_socket" \
-man4j/esf-web:v8 bin/catalina.sh jpda run
+man4j/esf-web:v9 bin/catalina.sh jpda run
 
   echo "Starting haproxy with constraint: ${constr:-dc${i}}..."
   docker service create --detach=false --network web-dc${i} -p 8${i}:80 --name web_proxy_dc${i} --mount target=/var/run/docker.sock,source=/var/run/docker.sock,type=bind --constraint "engine.labels.dc == ${constr:-dc${i}}" \

@@ -8,8 +8,8 @@ if [ -z "$1" ]; then
 fi
 
 for ((i=1;i<=$dc_count;i++)) do
-  docker service rm voltdb${i}
-  docker service rm nginx-voltdb${i}
+  docker service rm voltdb_dc${i}
+  docker service rm nginx_voltdb_dc${i}
 done
 
 docker network rm voltdb-net

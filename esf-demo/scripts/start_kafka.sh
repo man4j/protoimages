@@ -18,8 +18,8 @@ zoo_servers=server.1=zookeeper_dc1:2888:3888
 zoo_connect=zookeeper_dc1:2181
 
 for ((i=2;i<=$dc_count;i++)) do
-  zoo_servers=${zoo_servers}" server.${i}=zookeeper${i}:2888:3888"
-  zoo_connect=${zoo_connect},zookeeper${i}:2181
+  zoo_servers=${zoo_servers}" server.${i}=zookeeper_dc${i}:2888:3888"
+  zoo_connect=${zoo_connect},zookeeper_dc${i}:2181
 done
 
 echo "zoo_servers:" ${zoo_servers}
@@ -27,9 +27,9 @@ echo "zoo_connect:" ${zoo_connect}
 
 for ((i=1;i<=$dc_count;i++)) do
 
-echo "Starting zookeeper${i} with constraint: ${constr:-dc${i}}..."
+echo "Starting zookeeper with constraint: ${constr:-dc${i}}..."
 
-docker service create --detach=false --network kafka-net --endpoint-mode dnsrr --name zookeeper${i} --constraint "engine.labels.dc == ${constr:-dc${i}}" \
+docker service create --detach=false --network kafka-net --endpoint-mode dnsrr --name zookeeper_dc${i} --constraint "engine.labels.dc == ${constr:-dc${i}}" \
 --mount "type=volume,source=zookeeper_data_volume${i},target=/data" \
 --mount "type=volume,source=zookeeper_datalog_volume${i},target=/datalog" \
 -e "ZOO_MY_ID=${i}" \

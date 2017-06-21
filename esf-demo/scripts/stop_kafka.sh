@@ -8,8 +8,8 @@ if [ -z "$1" ]; then
 fi
 
 for ((i=1;i<=$dc_count;i++)) do
-  docker service rm kafka${i}
-  docker service rm zookeeper${i}
+  docker service rm kafka_dc${i}
+  docker service rm zookeeper_dc${i}
 done
 
 docker network rm kafka-net

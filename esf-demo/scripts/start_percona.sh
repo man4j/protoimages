@@ -9,7 +9,7 @@ image_version=5.7.16.17.1
 haproxy_version=1.6.7
 net_mask=100.0.0
 
-if [-z "$2" ]; then
+if [ -z "$2" ]; then
   timing=20
 fi
 
