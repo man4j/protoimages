@@ -25,6 +25,7 @@ for ((i=1;i<=$dc_count;i++)) do
 -e "KAFKA_BROKERS=kafka_dc1:9092,kafka_dc2:9092,kafka_dc3:9092" \
 -e "VOLTDB_HOSTS=voltdb_dc1:21212,voltdb_dc2:21212,voltdb_dc3:21212" \
 -e "NET_MASK=${net_mask}" \
+-e "CATALINA_OPTS="-Djava.security.egd=file:/dev/./urandom"" \
 -e "JPDA_ADDRESS=8000" \
 -e "JPDA_TRANSPORT=dt_socket" \
 man4j/esf-web:v9 bin/catalina.sh jpda run
