@@ -29,7 +29,7 @@ for ((i=1;i<=$dc_count;i++)) do
 -e "HOST_NUM=${i}" \
 -e "HOSTS=${hosts}" \
 --mount "type=volume,source=voltdb_volume${i},target=/var/voltdb" \
-man4j/esf_voltdb:6.9.2_1
+man4j/esf_voltdb:6.9.2_2
 
   echo "Starting nginx-voltdb with constraint: ${constr:-dc${i}}..."
 
