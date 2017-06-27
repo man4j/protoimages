@@ -7,9 +7,9 @@
             <email>support@voltdb.com</email>
             <url>http://voltdb.com/</url>
         </issuer>
-        <issuedate>2017-04-27</issuedate>
+        <issuedate>2017-06-19</issuedate>
         <licensee>VoltDB Trial User</licensee>
-        <expiration>2017-06-26</expiration>
+        <expiration>2017-08-18</expiration>
         <hostcount max="12"/>
         <features trial="true">
             <wanreplication>true</wanreplication>
@@ -17,7 +17,7 @@
         </features>
     </permit>
     <signature>
-        302C0214278B9AF98D52CF01E1803ABFF9371738D31DC1
-        C502146E46474D479C2ABD969817670C3B5743A2AB539F
+        302C02146D6F8A7C743B0FDDBD49F1EB6AFEAABE465EC5
+        410214361B2DE3D313323253432B3AC41B57DF399A1B44
     </signature>
 </license>
