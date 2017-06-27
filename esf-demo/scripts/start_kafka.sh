@@ -9,7 +9,7 @@ if [ -z "$1" ]; then
  echo "ERROR: Param dc_count not specified"
 fi
 
-echo "Creating a cross datacenter voltdb network: [kafka-net]"
+echo "Creating a cross datacenter kafka network: [kafka-net]"
 set +e
 docker network create --driver overlay --attachable --subnet=102.0.0.0/24 kafka-net
 set -e
